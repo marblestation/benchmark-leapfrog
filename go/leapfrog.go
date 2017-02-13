@@ -19,20 +19,9 @@ func main() {
     //var m [n_particles] float64
 
 	//// Create slices and not arrays, since arrays are passed by copy to func
-	// Initialize a ten length slice of empty slices
-	x := make([][]float64, n_particles)
-	// Initialize those n empty slices
-	for i := 0; i < n_particles; i++ {
-		x[i] = make([]float64, 3) // initialized to zero by default
-	}
-	v := make([][]float64, n_particles)
-	for i := 0; i < n_particles; i++ {
-		v[i] = make([]float64, 3) // initialized to zero by default
-	}
-	a := make([][]float64, n_particles)
-	for i := 0; i < n_particles; i++ {
-		a[i] = make([]float64, 3) // initialized to zero by default
-	}
+	x := make([][3]float64, n_particles)
+	v := make([][3]float64, n_particles)
+	a := make([][3]float64, n_particles)
 	m := make([]float64, n_particles)
 
     for time <= time_limit {
@@ -45,7 +34,7 @@ func main() {
     //fmt.Println("Done")
 }
 
-func integrator_leapfrog_part1(n_particles int, x [][]float64, v [][]float64, half_time_step float64) {
+func integrator_leapfrog_part1(n_particles int, x [][3]float64, v [][3]float64, half_time_step float64) {
 	for i := 0; i<n_particles; i++ {
 		x[i][0]  += half_time_step * v[i][0]
 		x[i][1]  += half_time_step * v[i][1]
@@ -53,7 +42,7 @@ func integrator_leapfrog_part1(n_particles int, x [][]float64, v [][]float64, ha
 	}
 }
 
-func integrator_leapfrog_part2(n_particles int, x [][]float64, v [][]float64, a [][]float64, time_step float64, half_time_step float64) {
+func integrator_leapfrog_part2(n_particles int, x [][3]float64, v [][3]float64, a [][3]float64, time_step float64, half_time_step float64) {
 	for i := 0; i<n_particles; i++ {
 		v[i][0] += time_step * a[i][0]
 		v[i][1] += time_step * a[i][1]
@@ -64,7 +53,7 @@ func integrator_leapfrog_part2(n_particles int, x [][]float64, v [][]float64, a 
 	}
 }
 
-func gravity_calculate_acceleration(n_particles int, m []float64, x [][]float64, a [][]float64) {
+func gravity_calculate_acceleration(n_particles int, m []float64, x [][3]float64, a [][3]float64) {
     G := 6.6742367e-11; // m^3.kg^-1.s^-2
 	for i := 0; i<n_particles; i++ {
 		a[i][0] = 0
