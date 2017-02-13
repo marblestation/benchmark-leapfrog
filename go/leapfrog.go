@@ -75,8 +75,8 @@ func gravity_calculate_acceleration(n_particles int, m []float64, x [][]float64,
 				continue
             }
             dx := x[i][0] - x[j][0]
-            dy := x[i][0] - x[j][0]
-            dz := x[i][0] - x[j][0]
+            dy := x[i][1] - x[j][1]
+            dz := x[i][2] - x[j][2]
             r := math.Sqrt(dx*dx + dy*dy + dz*dz)
             prefact := -G/(r*r*r) * m[j]
             a[i][0] += prefact * dx
