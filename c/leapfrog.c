@@ -31,8 +31,8 @@ void gravity_calculate_acceleration(int n_particles, double m[], double x[][3], 
                 continue;
             }
             double dx = x[i][0] - x[j][0];
-            double dy = x[i][0] - x[j][0];
-            double dz = x[i][0] - x[j][0];
+            double dy = x[i][1] - x[j][1];
+            double dz = x[i][2] - x[j][2];
             double r = sqrt(dx*dx + dy*dy + dz*dz);
             double prefact = -G/(r*r*r) * m[j];
             a[i][0] += prefact * dx;
