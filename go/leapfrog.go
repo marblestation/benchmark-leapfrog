@@ -70,7 +70,7 @@ func gravity_calculate_acceleration(n_particles int, m []float64, x [][]float64,
 		a[i][0] = 0
 		a[i][1] = 0
 		a[i][2] = 0
-		for j := 0; i<n_particles; i++ {
+		for j := 0; j<n_particles; j++ {
 			if j == i {
 				continue
             }
