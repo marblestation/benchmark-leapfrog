@@ -26,7 +26,7 @@ void gravity_calculate_acceleration(int n_particles, double m[], double x[][3], 
 		a[i][0] = 0;
 		a[i][1] = 0;
 		a[i][2] = 0;
-        for (int j=0; i<n_particles; i++){
+        for (int j=0; j<n_particles; j++){
             if (j == i) {
                 continue;
             }
