@@ -50,8 +50,8 @@ fn gravity_calculate_acceleration(n_particles: usize, m: &[f64; 3], x: &[[f64; 3
 				continue;
             }
             let dx = x[i][0] - x[j][0];
-            let dy = x[i][0] - x[j][0];
-            let dz = x[i][0] - x[j][0];
+            let dy = x[i][1] - x[j][1];
+            let dz = x[i][2] - x[j][2];
             let r = (dx*dx + dy*dy + dz*dz).sqrt();
             let prefact = -g/(r*r*r) * m[j];
             a[i][0] += prefact * dx;
