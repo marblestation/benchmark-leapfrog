@@ -16,8 +16,9 @@ fn main() {
         gravity_calculate_acceleration(N_PARTICLES, &m, &x, &mut a);
         integrator_leapfrog_part2(N_PARTICLES, &mut x, &mut v, &a, time_step, half_time_step);
         time += half_time_step;
-    } 
+    }
     //println!("Hello, world!");
+    println!("{:?}", x)
 }
 
 fn integrator_leapfrog_part1(n_particles: usize, x: &mut [[f64; 3]; N_PARTICLES], v: &[[f64; 3]; N_PARTICLES], half_time_step: f64) {
@@ -60,4 +61,3 @@ fn gravity_calculate_acceleration(n_particles: usize, m: &[f64; 3], x: &[[f64; 3
         }
 	}
 }
-
