@@ -8,7 +8,15 @@ fn main() {
     let mut x: [[f64; 3]; N_PARTICLES] = [[0.; 3]; N_PARTICLES];
     let mut v: [[f64; 3]; N_PARTICLES] = [[0.; 3]; N_PARTICLES];
     let mut a: [[f64; 3]; N_PARTICLES] = [[0.; 3]; N_PARTICLES];
-    let m: [f64; 3] = [0.; 3];
+    let mut m: [f64; N_PARTICLES] = [0.; N_PARTICLES];
+    m[0] = 0.08; // M_SUN
+    m[1] = 3.0e-6; // M_SUN
+    x[1][0] = 0.0162; // AU
+    x[1][1] = 6.57192058353e-15; // AU
+    x[1][2] = 5.74968548652e-16; // AU
+    v[1][0] = -1.48427302304e-14;
+    v[1][1] = 0.0399408809121;
+    v[1][2] = 0.00349437429104;
 
     while time <= time_limit {
         integrator_leapfrog_part1(N_PARTICLES, &mut x, &v, half_time_step);
@@ -40,7 +48,7 @@ fn integrator_leapfrog_part2(n_particles: usize, x: &mut [[f64; 3]; N_PARTICLES]
     }
 }
 
-fn gravity_calculate_acceleration(n_particles: usize, m: &[f64; 3], x: &[[f64; 3]; N_PARTICLES], a: &mut [[f64; 3]; N_PARTICLES]) {
+fn gravity_calculate_acceleration(n_particles: usize, m: &[f64; N_PARTICLES], x: &[[f64; 3]; N_PARTICLES], a: &mut [[f64; 3]; N_PARTICLES]) {
     let g = 6.6742367e-11; // m^3.kg^-1.s^-2
     for i in 0..n_particles {
 		a[i][0] = 0.;

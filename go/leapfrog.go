@@ -23,6 +23,14 @@ func main() {
 	v := make([][3]float64, n_particles)
 	a := make([][3]float64, n_particles)
 	m := make([]float64, n_particles)
+    m[0] = 0.08 // M_SUN
+    m[1] = 3.0e-6 // M_SUN
+    x[1][0] = 0.0162 // AU
+    x[1][1] = 6.57192058353e-15 // AU
+    x[1][2] = 5.74968548652e-16 // AU
+    v[1][0] = -1.48427302304e-14
+    v[1][1] = 0.0399408809121
+    v[1][2] = 0.00349437429104
 
     for time <= time_limit {
         integrator_leapfrog_part1(n_particles, x, v, half_time_step)

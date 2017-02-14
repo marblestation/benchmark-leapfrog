@@ -27,6 +27,14 @@ program leapfrog
     a(1,1:n_particles) = 0.0d0
     a(2,1:n_particles) = 0.0d0
     a(3,1:n_particles) = 0.0d0
+    m(1) = 0.08 ! M_SUN
+    m(2) = 3.0e-6 ! M_SUN
+    x(1, 2) = 0.0162 ! AU
+    x(2, 2) = 6.57192058353e-15 ! AU
+    x(3, 2) = 5.74968548652e-16 ! AU
+    v(1, 2) = -1.48427302304e-14
+    v(2, 2) = 0.0399408809121
+    v(3, 2) = 0.00349437429104
 
     half_time_step = 0.5d0*time_step
     do while (time.le.time_limit)

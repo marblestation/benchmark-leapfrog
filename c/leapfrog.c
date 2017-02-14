@@ -65,6 +65,14 @@ int main(int argc, char* argv[]) {
         a[i][1] = 0;
         a[i][2] = 0;
     }
+    m[0] = 0.08; // M_SUN
+    m[1] = 3.0e-6; // M_SUN
+    x[1][0] = 0.0162; // AU
+    x[1][1] = 6.57192058353e-15; // AU
+    x[1][2] = 5.74968548652e-16; // AU
+    v[1][0] = -1.48427302304e-14;
+    v[1][1] = 0.0399408809121;
+    v[1][2] = 0.00349437429104;
 
     while(time <= time_limit) {
         integrator_leapfrog_part1(n_particles, x, v, half_time_step);
@@ -73,8 +81,6 @@ int main(int argc, char* argv[]) {
         integrator_leapfrog_part2(n_particles, x, v, a, time_step, half_time_step);
         time += half_time_step;
     }
-    printf("Position particle 0: %f %f %f\n", x[0][0], x[0][1], x[0][2]);
-    printf("Position particle 1: %f %f %f\n", x[1][0], x[1][1], x[1][2]);
-    printf("Position particle 2: %f %f %f\n", x[2][0], x[2][1], x[2][2]);
+    printf("Position 1: %f %f %f | Position 2: %f %f %f\n", x[0][0], x[0][1], x[0][2], x[1][0], x[1][1], x[1][2]);
 }
 
