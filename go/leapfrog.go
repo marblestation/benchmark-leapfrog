@@ -1,85 +1,80 @@
 package main
 
-import "fmt"
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
-// this is a comment
+const nParticles = 2
 
 func main() {
-    const n_particles int = 2 
-    var time float64 = 0
-    var time_step float64 = 0.08
-    var half_time_step float64 = time_step/2.
-    var time_limit float64 = 365.25 * 1e6
+	var time float64
+	timeStep := 0.08
+	halfTimeStep := timeStep / 2.
+	timeLimit := 365.25 * 1e6
 
-    // Arrays (initialized to zero by default)
-    //var x [n_particles][3] float64
-    //var v [n_particles][3] float64
-    //var a [n_particles][3] float64
-    //var m [n_particles] float64
+	// Arrays (initialized to zero by default)
+	x := &[nParticles][3]float64{}
+	v := &[nParticles][3]float64{}
+	a := &[nParticles][3]float64{}
+	m := &[nParticles]float64{}
 
-	//// Create slices and not arrays, since arrays are passed by copy to func
-	x := make([][3]float64, n_particles)
-	v := make([][3]float64, n_particles)
-	a := make([][3]float64, n_particles)
-	m := make([]float64, n_particles)
-    m[0] = 0.08 // M_SUN
-    m[1] = 3.0e-6 // M_SUN
-    x[1][0] = 0.0162 // AU
-    x[1][1] = 6.57192058353e-15 // AU
-    x[1][2] = 5.74968548652e-16 // AU
-    v[1][0] = -1.48427302304e-14
-    v[1][1] = 0.0399408809121
-    v[1][2] = 0.00349437429104
+	m[0] = 0.08                 // M_SUN
+	m[1] = 3.0e-6               // M_SUN
+	x[1][0] = 0.0162            // AU
+	x[1][1] = 6.57192058353e-15 // AU
+	x[1][2] = 5.74968548652e-16 // AU
+	v[1][0] = -1.48427302304e-14
+	v[1][1] = 0.0399408809121
+	v[1][2] = 0.00349437429104
 
-    for time <= time_limit {
-        integrator_leapfrog_part1(n_particles, x, v, half_time_step)
-        time += half_time_step
-        gravity_calculate_acceleration(n_particles, m, x, a)
-        integrator_leapfrog_part2(n_particles, x, v, a, time_step, half_time_step)
-        time += half_time_step
-    }
-    fmt.Println("Positions:", x)
+	for time <= timeLimit {
+		integrator_leapfrog_part1(x, v, halfTimeStep)
+		time += halfTimeStep
+		gravity_calculate_acceleration(m, x, a)
+		integrator_leapfrog_part2(x, v, a, timeStep, halfTimeStep)
+		time += halfTimeStep
+	}
+	fmt.Println("Positions:", x)
 }
 
-func integrator_leapfrog_part1(n_particles int, x [][3]float64, v [][3]float64, half_time_step float64) {
-	for i := 0; i<n_particles; i++ {
-		x[i][0]  += half_time_step * v[i][0]
-		x[i][1]  += half_time_step * v[i][1]
-		x[i][2]  += half_time_step * v[i][2]
+func integrator_leapfrog_part1(x *[nParticles][3]float64, v *[nParticles][3]float64, halfTimeStep float64) {
+	for i := 0; i < nParticles; i++ {
+		x[i][0] += halfTimeStep * v[i][0]
+		x[i][1] += halfTimeStep * v[i][1]
+		x[i][2] += halfTimeStep * v[i][2]
 	}
 }
 
-func integrator_leapfrog_part2(n_particles int, x [][3]float64, v [][3]float64, a [][3]float64, time_step float64, half_time_step float64) {
-	for i := 0; i<n_particles; i++ {
-		v[i][0] += time_step * a[i][0]
-		v[i][1] += time_step * a[i][1]
-		v[i][2] += time_step * a[i][2]
-		x[i][0]  += half_time_step * v[i][0]
-		x[i][1]  += half_time_step * v[i][1]
-		x[i][2]  += half_time_step * v[i][2]
+func integrator_leapfrog_part2(x *[nParticles][3]float64, v *[nParticles][3]float64, a *[nParticles][3]float64, timeStep float64, halfTimeStep float64) {
+	for i := 0; i < nParticles; i++ {
+		v[i][0] += timeStep * a[i][0]
+		v[i][1] += timeStep * a[i][1]
+		v[i][2] += timeStep * a[i][2]
+		x[i][0] += halfTimeStep * v[i][0]
+		x[i][1] += halfTimeStep * v[i][1]
+		x[i][2] += halfTimeStep * v[i][2]
 	}
 }
 
-func gravity_calculate_acceleration(n_particles int, m []float64, x [][3]float64, a [][3]float64) {
-    G := 6.6742367e-11; // m^3.kg^-1.s^-2
-	for i := 0; i<n_particles; i++ {
+func gravity_calculate_acceleration(m *[nParticles]float64, x *[nParticles][3]float64, a *[nParticles][3]float64) {
+	G := 6.6742367e-11 // m^3.kg^-1.s^-2
+	for i := 0; i < nParticles; i++ {
 		a[i][0] = 0
 		a[i][1] = 0
 		a[i][2] = 0
-		for j := 0; j<n_particles; j++ {
+		for j := 0; j < nParticles; j++ {
 			if j == i {
 				continue
-            }
-            dx := x[i][0] - x[j][0]
-            dy := x[i][1] - x[j][1]
-            dz := x[i][2] - x[j][2]
-            r := math.Sqrt(dx*dx + dy*dy + dz*dz)
-            prefact := -G/(r*r*r) * m[j]
-            a[i][0] += prefact * dx
-            a[i][1] += prefact * dy
-            a[i][2] += prefact * dz
-        }
+			}
+			dx := x[i][0] - x[j][0]
+			dy := x[i][1] - x[j][1]
+			dz := x[i][2] - x[j][2]
+			r := math.Sqrt(dx*dx + dy*dy + dz*dz)
+			prefact := -G / (r * r * r) * m[j]
+			a[i][0] += prefact * dx
+			a[i][1] += prefact * dy
+			a[i][2] += prefact * dz
+		}
 	}
 }
-
