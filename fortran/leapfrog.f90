@@ -4,9 +4,9 @@ program leapfrog
 
     integer :: n_particles
     integer :: error
-    real(selected_real_kind(15,307)), dimension(:), allocatable :: m
-    real(selected_real_kind(15,307)), dimension(:,:), allocatable :: x, v, a
-    real(selected_real_kind(15,307)) :: time, time_step, time_limit, half_time_step, time_write
+    real, dimension(:), allocatable :: m
+    real, dimension(:,:), allocatable :: x, v, a
+    real :: time, time_step, time_limit, half_time_step, time_write
 
     n_particles = 2
     time = 0
@@ -58,9 +58,9 @@ subroutine integrator_leapfrog_part1(n_particles,x,v,half_time_step)
 
     ! Input/Output
     integer,intent(in) :: n_particles
-    real(selected_real_kind(15,307)),intent(out) :: x(3,n_particles)
-    real(selected_real_kind(15,307)),intent(in) :: v(3,n_particles)
-    real(selected_real_kind(15,307)),intent(in) :: half_time_step
+    real,intent(out) :: x(3,n_particles)
+    real,intent(in) :: v(3,n_particles)
+    real,intent(in) :: half_time_step
 
     ! Local
     integer :: i
@@ -78,9 +78,9 @@ subroutine integrator_leapfrog_part2(n_particles,x,v,a,time_step,half_time_step)
 
     ! Input/Output
     integer,intent(in) :: n_particles
-    real(selected_real_kind(15,307)),intent(out) :: x(3,n_particles), v(3,n_particles)
-    real(selected_real_kind(15,307)),intent(in) :: a(3,n_particles)
-    real(selected_real_kind(15,307)),intent(in) :: time_step, half_time_step
+    real,intent(out) :: x(3,n_particles), v(3,n_particles)
+    real,intent(in) :: a(3,n_particles)
+    real,intent(in) :: time_step, half_time_step
 
     ! Local
     integer :: i
@@ -103,13 +103,13 @@ subroutine gravity_calculate_acceleration(n_particles,m,x,a_grav)
 
     ! Input/Output
     integer,intent(in) :: n_particles
-    real(selected_real_kind(15,307)),intent(in) :: x(3,n_particles)
-    real(selected_real_kind(15,307)),intent(in) :: m(n_particles)
-    real(selected_real_kind(15,307)), intent(out) :: a_grav(3,n_particles)
+    real,intent(in) :: x(3,n_particles)
+    real,intent(in) :: m(n_particles)
+    real, intent(out) :: a_grav(3,n_particles)
 
     ! Local
     integer :: i,j
-    real(selected_real_kind(15,307)) :: dx,dy,dz,rr,prefact,G
+    real :: dx,dy,dz,rr,prefact,G
     !-------------------------------------------------------------------------
 
     G = 6.6742367e-11 ! m^3.kg^-1.s^-2
