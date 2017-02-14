@@ -73,5 +73,8 @@ int main(int argc, char* argv[]) {
         integrator_leapfrog_part2(n_particles, x, v, a, time_step, half_time_step);
         time += half_time_step;
     }
+    printf("Position particle 0: %f %f %f\n", x[0][0], x[0][1], x[0][2]);
+    printf("Position particle 1: %f %f %f\n", x[1][0], x[1][1], x[1][2]);
+    printf("Position particle 2: %f %f %f\n", x[2][0], x[2][1], x[2][2]);
 }
 

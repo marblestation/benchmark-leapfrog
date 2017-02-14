@@ -1,6 +1,6 @@
 package main
 
-//import "fmt"
+import "fmt"
 import "math"
 
 // this is a comment
@@ -42,7 +42,7 @@ func main() {
         integrator_leapfrog_part2(n_particles, x, v, a, time_step, half_time_step)
         time += half_time_step
     }
-    //fmt.Println("Done")
+    fmt.Println("Positions:", x)
 }
 
 func integrator_leapfrog_part1(n_particles int, x [][]float64, v [][]float64, half_time_step float64) {

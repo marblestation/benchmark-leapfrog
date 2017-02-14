@@ -40,6 +40,7 @@ program leapfrog
             !time_write = time_write + 100.*365.25d0
         !endif
     enddo
+    write(*,*) x
 
 
 end program leapfrog
