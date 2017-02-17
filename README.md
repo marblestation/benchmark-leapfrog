@@ -7,7 +7,7 @@ The code has evolved since publication, implementing several suggestion made by 
 - C: 2m53.504s
 - Fortran: 2m29.226s
 - Rust: 2m33.082s
-- Go: 4m6.579s
+- Go: 3m22.032s
 
 Output positions for the two particles after a one million year simulation:
 
