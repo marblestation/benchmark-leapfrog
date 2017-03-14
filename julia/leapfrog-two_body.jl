@@ -1,3 +1,5 @@
+using StaticArrays
+
 function gravitate!(x::AbstractArray{<:Real, 2}, a::AbstractArray{<:Real, 2},
                    m::AbstractArray{<:Real, 1})
     @assert size(x) == size(a)
@@ -27,8 +29,27 @@ function gravitate!(x::AbstractArray{<:Real, 2}, a::AbstractArray{<:Real, 2},
     end
 end
 
-function main(;dt::Real=0.08, tmax::Real=3.6525e8)
+function simulate!(x::AbstractArray{<:Real, 2}, v::AbstractArray{<:Real, 2},
+                   a::AbstractArray{<:Real, 2}, m::AbstractArray{<:Real, 1}
+                   ; dt::Real=0.08, tmax::Real=3.6525e8)
+    @assert size(x) == size(a)
+    @assert size(x) == size(v)
+    @assert size(m)[1] == size(x)[1]
+    @assert size(x)[2] == 3
+
     hdt = dt / 2
+    t = 0
+    
+    while t < tmax
+        @. x += hdt * v
+        gravitate!(x, a, m)
+        @. v += dt * a
+        @. x += hdt * v
+        t += dt
+    end
+end
+ 
+function main(;dt::Real=0.08, tmax::Real=3.6525e8)
     
     # Arrays (initialized to zero by default)
     x = zeros(2,3)
@@ -44,17 +65,31 @@ function main(;dt::Real=0.08, tmax::Real=3.6525e8)
     @inbounds v[2,3] = 0.00349437429104
 
     m = [0.08, 3.0e-6]   # M_Sun
-    
-    for k in 1:round(Int, tmax/dt)
-        @. x += hdt * v
-        gravitate!(x, a, m)
-        @. v += dt * a
-        @. x += hdt * v
-    end
+
+    simulate!(x, v, a, m, dt=dt, tmax=tmax)
     
     println("Positions:", x)
 end
 
-#function static_main(;dt::Real=0.08, tmax::Real=3.6525e8)
+function static_main(;dt::Real=0.08, tmax::Real=3.6525e8)
+    
+    # Arrays (initialized to zero by default)
+    x = @MMatrix zeros(2,3)
+    v = @MMatrix zeros(2,3)
+    a = @MMatrix zeros(2,3)
 
+    @inbounds x[2,1] = 0.0162
+    @inbounds x[2,2] = 6.57192058353e-15
+    @inbounds x[2,3] = 5.74968548652e-16
+
+    @inbounds v[2,1] = -1.48427302304e-14
+    @inbounds v[2,2] = 0.0399408809121
+    @inbounds v[2,3] = 0.00349437429104
+
+    m = [0.08, 3.0e-6]   # M_Sun
+    
+    simulate!(x, v, a, m, dt=dt, tmax=tmax)
+    
+    println("Positions:", x)
+end
 
