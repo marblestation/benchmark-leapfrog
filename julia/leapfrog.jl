@@ -1,8 +1,8 @@
 using StaticArrays
 
-const ndims = 3
-const PosVector = SVector{ndims, Float64}
-const zerov = zero(SVector{ndims})
+const dims = 3
+const PosVector = SVector{dims, Float64}
+const zerov = zero(SVector{dims})
 
 @inline function gravitate!(x::Vector{PosVector}, a::Vector{PosVector},
                             m::Vector)
