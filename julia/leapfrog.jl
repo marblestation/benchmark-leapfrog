@@ -50,4 +50,8 @@ function main(;dt::Real=0.08, tmax::Real=3.6525e8)
     println("Positions:", x)
 end
 
+println("Running up to tmax=10 to compile...")
+@time main(tmax=1e2)
+println("Running full benchmark...")
+@time main()
 
