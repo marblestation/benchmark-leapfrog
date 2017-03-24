@@ -1,0 +1,3 @@
+#!/bin/bash
+# OSX: /Applications/Julia-0.5.app/Contents/Resources/julia/bin/julia
+julia -O3 leapfrog.jl

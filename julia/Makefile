@@ -1,6 +1,10 @@
+
 all:
 	echo "Installing dependencies..."
+	# OSX: /Applications/Julia-0.5.app/Contents/Resources/julia/bin/julia
 	julia -e 'Pkg.add("StaticArrays"); using StaticArrays;'
-	echo "To run: julia -O3 leapfrog.jl"
+
+clean:
+	
 
 

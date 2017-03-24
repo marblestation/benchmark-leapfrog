@@ -1,6 +1,6 @@
 # Simple N-Body with LeapFrog integrator
 
-Implementation in C, Fortran, Go and Rust of a very simple N-Body simulator with 3 particles using a LeapFrog integrator. Presented in [What can the programming language Rust do for astrophysics?](https://arxiv.org/abs/1702.02951), to appear in the Proceedings of the IAU Symposium 325 on Astroinformatics.
+Implementation in C, Fortran, Go, Julia and Rust of a very simple N-Body simulator with 3 particles using a LeapFrog integrator. Presented in [What can the programming language Rust do for astrophysics?](https://arxiv.org/abs/1702.02951), to appear in the Proceedings of the IAU Symposium 325 on Astroinformatics.
 
 The code has evolved since publication, implementing several suggestion made by the [Hacker News](https://news.ycombinator.com/item?id=13632894) and [Rust subreddit](https://www.reddit.com/r/rust/comments/5trref/what_can_rust_do_for_astrophysics/) communities. The current times on a 1,6 GHz Intel Core i5 machine:
 
@@ -8,6 +8,7 @@ The code has evolved since publication, implementing several suggestion made by 
 - Fortran: 3m16.314s
 - Rust: 2m33.082s
 - Go: 4m10.233s
+- Julia: 3m59.223s
 
 Output positions for the two particles after a one million year simulation:
 
