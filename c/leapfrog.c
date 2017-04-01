@@ -2,14 +2,14 @@
 #include <stdlib.h>
 #include <math.h>
 
-void integrator_leapfrog_part1(int n_particles, double x[][3], double v[][3], double half_time_step){
+void integrator_leapfrog_part1(int n_particles, double x[restrict][3], double v[restrict][3], double half_time_step){
 	for (int i=0;i<n_particles;i++){
 		x[i][0]  += half_time_step * v[i][0];
 		x[i][1]  += half_time_step * v[i][1];
 		x[i][2]  += half_time_step * v[i][2];
 	}
 }
-void integrator_leapfrog_part2(int n_particles, double x[][3], double v[][3], double a[][3], double time_step, double half_time_step){
+void integrator_leapfrog_part2(int n_particles, double x[restrict][3], double v[restrict][3], double a[restrict][3], double time_step, double half_time_step){
 	for (int i=0;i<n_particles;i++){
 		v[i][0] += time_step * a[i][0];
 		v[i][1] += time_step * a[i][1];
@@ -20,7 +20,7 @@ void integrator_leapfrog_part2(int n_particles, double x[][3], double v[][3], do
 	}
 }
 
-void gravity_calculate_acceleration(int n_particles, double m[], double x[][3], double a[][3]) {
+void gravity_calculate_acceleration(int n_particles, double m[restrict], double x[restrict][3], double a[restrict][3]) {
     double G = 6.6742367e-11; // m^3.kg^-1.s^-2
     for (int i=0; i<n_particles; i++){
 		a[i][0] = 0;
